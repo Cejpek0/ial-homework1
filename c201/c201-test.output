@@ -54,16 +54,16 @@ Active element : not initialised (no item is active)
 List elements  : 1 2 3
 First element  : 1
 Active element : not initialised (no item is active)
-Returned value : 0
+Returned value : 1
 
 
 [test_get_value] Získání hodnot aktivních prvků
 List elements  : 1 2 3
 First element  : 1
 Active element : not initialised (no item is active)
-Returned value : 0
-Returned value : 0
-Returned value : 0
+Returned value : 1
+Returned value : 2
+Returned value : 3
 
 
 [test_set_value] Aktualizace hodnot aktivních prvků
@@ -136,8 +136,37 @@ Active element : not initialised (no item is active)
 List elements  : 1 1 2 2 3 3
 First element  : 1
 Active element : not initialised (no item is active)
-List elements  : 1 2328 1
+--------------------------------
+first: 0x2252350
+active: 0x2252350
+first-next: 0x2252330
+active-next: 0x2252330
+--------------------------------/nList elements  : 1 2 2 3 3
+First element  : 1
+Active element : 1
+--------------------------------
+first: 0x2252350
+active: 0x22522b0
+first-next: 0x22522b0
+active-next: 0x22522d0
+--------------------------------/nList elements  : 1 2 3 3
 First element  : 1
 Active element : 2
-List elements  : 1 2328 2
+--------------------------------
+first: 0x2252350
+active: 0x22522f0
+first-next: 0x22522b0
+active-next: 0x2252310
+--------------------------------/nList elements  : 1 2 3
 First element  : 1
+Active element : 3
+
+
+[test_dispose] Zrušení prvků seznamu
+List elements  : 1 2 3
+First element  : 1
+Active element : not initialised (no item is active)
+List elements  : none (list is empty)
+First element  : not initialised (list is empty)
+Active element : not initialised (no item is active)
+

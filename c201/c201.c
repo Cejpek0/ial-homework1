@@ -107,7 +107,7 @@ void List_Dispose( List *list ) {
  * @param data Hodnota k vložení na začátek seznamu
  */
 void List_InsertFirst( List *list, int data ) {
-	ListElementPtr newItem = malloc(sizeof(ListElementPtr)); // Alokace pameti pro novy prvek
+	ListElementPtr newItem = (ListElementPtr)malloc(sizeof(ListElementPtr)); // Alokace pameti pro novy prvek
 
 	if(newItem == NULL) { // Pokud neni dostatek pameti -> error
 		List_Error();
@@ -142,7 +142,7 @@ void List_GetFirst( List *list, int *dataPtr ) {
 		return;
 	}
 
-	dataPtr = &list->firstElement->data;
+	*dataPtr = list->firstElement->data;
 }
 
 /**
@@ -173,10 +173,17 @@ void List_DeleteAfter( List *list ) {
 	if(list->activeElement == NULL || list->activeElement->nextElement == NULL) {
 		return;
 	}
-
-	ListElementPtr oldNextNextElement = list->activeElement->nextElement;
-	list->activeElement = list->activeElement->nextElement->nextElement;
-	free(oldNextNextElement);
+	/*
+	printf("--------------------------------\n");
+	printf("first: %p\n",(void *)list->firstElement);
+	printf("active: %p\n",(void *)list->activeElement);
+	printf("first-next: %p\n",(void *)list->firstElement->nextElement);
+	printf("active-next: %p\n",(void *)list->activeElement->nextElement);
+	printf("--------------------------------/n");*/
+	
+	ListElementPtr oldNextElement = list->activeElement->nextElement;
+	list->activeElement->nextElement = list->activeElement->nextElement->nextElement;
+	free(oldNextElement);
 }
 
 /**
@@ -193,7 +200,7 @@ void List_InsertAfter( List *list, int data ) {
 		return;
 	}
 
-	ListElementPtr newItem = malloc(sizeof(ListElementPtr*));
+	ListElementPtr newItem = (ListElementPtr)malloc(sizeof(ListElementPtr*));
 
 	if(newItem == NULL) { // Pokud neni dostatek pameti -> error
 		List_Error();
@@ -218,7 +225,7 @@ void List_GetValue( List *list, int *dataPtr ) {
 		List_Error();
 		return;
 	}
-	dataPtr = &list->activeElement->data;
+	*dataPtr = list->activeElement->data;
 }
 
 /**
