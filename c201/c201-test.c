@@ -253,6 +253,13 @@ int main()
 	printf("C201 - Linked List, Basic Tests\n");
 	printf("===============================\n");
 
+	List list;
+	ListElementPtr ptr1;
+	ListElementPtr ptr2;
+	ListElementPtr ptr3;
+	
+	list.
+	return 0;
 	test_init();
 	test_get_first_empty();
 	test_first_empty();

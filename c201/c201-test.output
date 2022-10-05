@@ -136,9 +136,8 @@ Active element : not initialised (no item is active)
 List elements  : 1 1 2 2 3 3
 First element  : 1
 Active element : not initialised (no item is active)
-List elements  : 1 0 1
+List elements  : 1 2328 1
 First element  : 1
-Active element : 0
-List elements  : 1 0 1
+Active element : 2
+List elements  : 1 2328 2
 First element  : 1
-Activ

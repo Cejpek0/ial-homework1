@@ -87,13 +87,11 @@ void List_Init( List *list ) {
  **/
 void List_Dispose( List *list ) {
 	// Prochazeni seznamu od zacatku do konce, a postupne odstranovani elementu
-	ListElementPtr elementToDelete = list->firstElement;
-	while(elementToDelete != NULL) {
-        ListElementPtr temp = elementToDelete->nextElement;
+	for(ListElementPtr elementToDelete = list->firstElement; elementToDelete != NULL;) {
+		ListElementPtr nextElement = elementToDelete->nextElement;
         free(elementToDelete);
-		elementToDelete = temp;
-    }
-
+        elementToDelete = nextElement;
+	}
 	list->firstElement = NULL;
 	list->activeElement = NULL;
 }
@@ -115,8 +113,9 @@ void List_InsertFirst( List *list, int data ) {
 	}
 
 	newItem->data = data;
-	newItem->nextElement = list->firstElement;
-	list->firstElement = newItem; // Navazani noveho prvku na zbytek seznamu
+	ListElementPtr oldFirstElement = list->firstElement;
+	list->firstElement = newItem;
+	list->firstElement->nextElement = oldFirstElement; // Navazani noveho prvku na zbytek seznamu
 }
 
 /**
@@ -175,7 +174,7 @@ void List_DeleteAfter( List *list ) {
 	}
 
 	ListElementPtr oldNextNextElement = list->activeElement->nextElement;
-	list->activeElement = list->activeElement->nextElement->nextElement;
+	list->activeElement = list->activeElement->nextElement;
 	free(oldNextNextElement);
 }
 
