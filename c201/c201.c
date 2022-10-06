@@ -74,7 +74,8 @@ void List_Error() {
  * @param list Ukazatel na strukturu jednosměrně vázaného seznamu
  */
 void List_Init( List *list ) {
-	list->activeElement = NULL; // Nastaveni defaultnich hodnot
+	// Nastaveni defaultnich hodnot pointeru na null
+	list->activeElement = NULL;
 	list->firstElement = NULL;
 }
 
@@ -88,8 +89,8 @@ void List_Init( List *list ) {
 void List_Dispose( List *list ) {
 	// Prochazeni seznamu od zacatku do konce, a postupne odstranovani elementu
 	ListElementPtr elementToDelete = list->firstElement;
-	while(elementToDelete != NULL) {
-        ListElementPtr temp = elementToDelete->nextElement;
+	while(elementToDelete != NULL) { // Dokud nedojde na konec seznamu
+        ListElementPtr temp = elementToDelete->nextElement; //Ulozeni odkazu na dalsi prvek
         free(elementToDelete);
 		elementToDelete = temp;
     }
@@ -115,8 +116,8 @@ void List_InsertFirst( List *list, int data ) {
 	}
 
 	newItem->data = data;
-	newItem->nextElement = list->firstElement;
-	list->firstElement = newItem; // Navazani noveho prvku na zbytek seznamu
+	newItem->nextElement = list->firstElement; // Navazani noveho prvku na zbytek seznamu
+	list->firstElement = newItem; // Nastaveni noveho prvku jako prvni
 }
 
 /**
@@ -137,12 +138,12 @@ void List_First( List *list ) {
  * @param dataPtr Ukazatel na cílovou proměnnou
  */
 void List_GetFirst( List *list, int *dataPtr ) {
-	if(list->firstElement == NULL) {
+	if(list->firstElement == NULL) { // Pokud je prvni prvek prazdny -> error
 		List_Error();
 		return;
 	}
 
-	*dataPtr = list->firstElement->data;
+	*dataPtr = list->firstElement->data; // Do hodnoty na ukazateli dataPtr ulozim pozadovana data
 }
 
 /**
@@ -153,12 +154,12 @@ void List_GetFirst( List *list, int *dataPtr ) {
  * @param list Ukazatel na inicializovanou strukturu jednosměrně vázaného seznamu
  */
 void List_DeleteFirst( List *list ) {
-	if(list->firstElement == NULL) {
+	if(list->firstElement == NULL) { // Pokud neni prvni element -> error
 		return;
 	}
 
-	ListElementPtr oldFirstElement = list->firstElement;
-	list->firstElement = list->firstElement->nextElement;
+	ListElementPtr oldFirstElement = list->firstElement; // Ulozeni stavajiciho prvniho prvku, abych na nej neztratil odkaz
+	list->firstElement = list->firstElement->nextElement; // Namapovani noveho prvku jako prvni
 	free(oldFirstElement);
 }
 
@@ -170,18 +171,13 @@ void List_DeleteFirst( List *list ) {
  * @param list Ukazatel na inicializovanou strukturu jednosměrně vázaného seznamu
  */
 void List_DeleteAfter( List *list ) {
-	if(list->activeElement == NULL || list->activeElement->nextElement == NULL) {
+	if(list->activeElement == NULL || list->activeElement->nextElement == NULL) { // Pokud neexistuje prvni, nebo druhy element -> nothing
 		return;
 	}
-	/*
-	printf("--------------------------------\n");
-	printf("first: %p\n",(void *)list->firstElement);
-	printf("active: %p\n",(void *)list->activeElement);
-	printf("first-next: %p\n",(void *)list->firstElement->nextElement);
-	printf("active-next: %p\n",(void *)list->activeElement->nextElement);
-	printf("--------------------------------/n");*/
-	
-	ListElementPtr oldNextElement = list->activeElement->nextElement;
+
+	ListElementPtr oldNextElement = list->activeElement->nextElement; // Ulozeni elementu, aby se pozdeji mohl vymazat
+	/* Nastavi nextElement, jako nasledujuci element, nasledujuciho elementu
+		tzv. v linearnim seznamu se preskoci nasledujici elemnent*/
 	list->activeElement->nextElement = list->activeElement->nextElement->nextElement;
 	free(oldNextElement);
 }
@@ -196,11 +192,11 @@ void List_DeleteAfter( List *list ) {
  * @param data Hodnota k vložení do seznamu za právě aktivní prvek
  */
 void List_InsertAfter( List *list, int data ) {
-	if(list->activeElement == NULL) {
+	if(list->activeElement == NULL) { // Pokud neni list aktivni -> nothing
 		return;
 	}
 
-	ListElementPtr newItem = (ListElementPtr)malloc(sizeof(ListElementPtr*));
+	ListElementPtr newItem = (ListElementPtr)malloc(sizeof(ListElementPtr)); // Naalokovani noveho prvku
 
 	if(newItem == NULL) { // Pokud neni dostatek pameti -> error
 		List_Error();
@@ -221,11 +217,12 @@ void List_InsertAfter( List *list, int data ) {
  * @param dataPtr Ukazatel na cílovou proměnnou
  */
 void List_GetValue( List *list, int *dataPtr ) {
-	if(list->activeElement == NULL) {
+	if(list->activeElement == NULL) { // Pokud neni list aktivni -> error
 		List_Error();
 		return;
 	}
-	*dataPtr = list->activeElement->data;
+
+	*dataPtr = list->activeElement->data; // Na adresu dataPtr ulozim pozadovanou hodnotu
 }
 
 /**
@@ -236,7 +233,7 @@ void List_GetValue( List *list, int *dataPtr ) {
  * @param data Nová hodnota právě aktivního prvku
  */
 void List_SetValue( List *list, int data ) {
-	if (list->activeElement == NULL) {
+	if (list->activeElement == NULL) { // Pokud neni list aktivni -> nothing
 		return;
 	}
 
