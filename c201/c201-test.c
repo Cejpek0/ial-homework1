@@ -252,7 +252,7 @@ int main()
 {
 	printf("C201 - Linked List, Basic Tests\n");
 	printf("===============================\n");
-	
+
 	test_init();
 	test_get_first_empty();
 	test_first_empty();

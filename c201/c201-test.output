@@ -136,28 +136,13 @@ Active element : not initialised (no item is active)
 List elements  : 1 1 2 2 3 3
 First element  : 1
 Active element : not initialised (no item is active)
---------------------------------
-first: 0x2252350
-active: 0x2252350
-first-next: 0x2252330
-active-next: 0x2252330
---------------------------------/nList elements  : 1 2 2 3 3
+List elements  : 1 2 2 3 3
 First element  : 1
 Active element : 1
---------------------------------
-first: 0x2252350
-active: 0x22522b0
-first-next: 0x22522b0
-active-next: 0x22522d0
---------------------------------/nList elements  : 1 2 3 3
+List elements  : 1 2 3 3
 First element  : 1
 Active element : 2
---------------------------------
-first: 0x2252350
-active: 0x22522f0
-first-next: 0x22522b0
-active-next: 0x2252310
---------------------------------/nList elements  : 1 2 3
+List elements  : 1 2 3
 First element  : 1
 Active element : 3
 
