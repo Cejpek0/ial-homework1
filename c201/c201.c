@@ -108,7 +108,7 @@ void List_Dispose( List *list ) {
  * @param data Hodnota k vložení na začátek seznamu
  */
 void List_InsertFirst( List *list, int data ) {
-	ListElementPtr newItem = (ListElementPtr)malloc(sizeof(ListElementPtr)); // Alokace pameti pro novy prvek
+	ListElementPtr newItem = (ListElementPtr)malloc(sizeof(*newItem)); // Alokace pameti pro novy prvek
 
 	if(newItem == NULL) { // Pokud neni dostatek pameti -> error
 		List_Error();
@@ -157,6 +157,10 @@ void List_DeleteFirst( List *list ) {
 	if(list->firstElement == NULL) { // Pokud neni prvni element -> error
 		return;
 	}
+	if(list->activeElement == list->firstElement) {
+		list->activeElement = NULL;
+	}
+	
 
 	ListElementPtr oldFirstElement = list->firstElement; // Ulozeni stavajiciho prvniho prvku, abych na nej neztratil odkaz
 	list->firstElement = list->firstElement->nextElement; // Namapovani noveho prvku jako prvni
@@ -196,7 +200,7 @@ void List_InsertAfter( List *list, int data ) {
 		return;
 	}
 
-	ListElementPtr newItem = (ListElementPtr)malloc(sizeof(ListElementPtr)); // Naalokovani noveho prvku
+	ListElementPtr newItem = (ListElementPtr)malloc(sizeof(*newItem)); // Naalokovani noveho prvku
 
 	if(newItem == NULL) { // Pokud neni dostatek pameti -> error
 		List_Error();
@@ -262,11 +266,7 @@ void List_Next( List *list ) {
  * @param list Ukazatel na inicializovanou strukturu jednosměrně vázaného seznamu
  */
 int List_IsActive( List *list ) {
-	if(list->activeElement != NULL) {
-		return 1;
-	}
-
-	return 0;
+	return list->activeElement != NULL ? 1 : 0;
 }
 
 /* Konec c201.c */
