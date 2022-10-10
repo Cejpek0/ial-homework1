@@ -137,7 +137,8 @@ int Queue_IsEmpty( const Queue *queue ) {
  * @param queue Ukazatel na inicializovanou strukturu fronty
  */
 int Queue_IsFull( const Queue *queue ) {
-	// Pokud dalsi index prazdneho mista je index prvniho prvku, je pole plne
+	/* Pokud dalsi index prazdneho mista je index prvniho prvku, je fronta "plna" (1 prazdne misto).
+		Pokud, by se do takoveho pole zapsalo, free index a first index by ukazovali na stejny prvek -> fronta je prazdna*/
 	return nextIndex(queue->freeIndex) == queue->firstIndex ? 1 : 0;
 }
 

@@ -143,7 +143,7 @@ void List_GetFirst( List *list, int *dataPtr ) {
 		return;
 	}
 
-	*dataPtr = list->firstElement->data; // Do hodnoty na ukazateli dataPtr ulozim pozadovana data
+	*dataPtr = list->firstElement->data;
 }
 
 /**
@@ -157,7 +157,7 @@ void List_DeleteFirst( List *list ) {
 	if(list->firstElement == NULL) { // Pokud neni prvni element -> error
 		return;
 	}
-	if(list->activeElement == list->firstElement) {
+	if(list->activeElement == list->firstElement) { // Pokud je prvni zaroven aktivni -> ztrati se aktivita
 		list->activeElement = NULL;
 	}
 	
